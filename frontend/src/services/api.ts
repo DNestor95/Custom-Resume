@@ -1,4 +1,4 @@
-import type { JobApplication, CreateJobRequest, UpdateJobRequest } from '../types';
+import type { JobApplication, CreateJobRequest, UpdateJobRequest, ScrapeJobResponse } from '../types';
 
 const BASE = '/api';
 
@@ -58,5 +58,13 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ baseResume, styleSample }),
     }).then(handleResponse<{ coverLetter: string }>);
+  },
+
+  scrapeJob(url: string): Promise<ScrapeJobResponse> {
+    return fetch(`${BASE}/scrape-job`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    }).then(handleResponse<ScrapeJobResponse>);
   },
 };

@@ -89,3 +89,48 @@ Return only the cover letter text, no additional commentary.`;
 
   return response.choices[0]?.message?.content ?? '';
 }
+
+export async function extractJobDetails(
+  pageText: string
+): Promise<{ company: string; title: string; description: string }> {
+  const openai = getClient();
+
+  // Truncate to avoid token limits – first ~8000 chars is usually enough
+  const truncated = pageText.slice(0, 8000);
+
+  const prompt = `You are a job posting parser. Given the following text extracted from a web page, extract the structured job posting information.
+
+Web page text:
+${truncated}
+
+Return a JSON object with exactly these fields:
+- "company": the company name (string)
+- "title": the job title (string)
+- "description": the full job description including responsibilities, requirements, and qualifications (string)
+
+If any field cannot be determined, use "Unknown" for that field.
+Return ONLY valid JSON, no additional text or markdown.`;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.3,
+    max_tokens: 2000,
+  });
+
+  const content = response.choices[0]?.message?.content ?? '{}';
+
+  // Strip markdown code fences if present
+  const cleaned = content.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '').trim();
+
+  try {
+    const parsed = JSON.parse(cleaned);
+    return {
+      company: parsed.company ?? 'Unknown',
+      title: parsed.title ?? 'Unknown',
+      description: parsed.description ?? '',
+    };
+  } catch {
+    throw new Error('Failed to parse job details from the page content.');
+  }
+}

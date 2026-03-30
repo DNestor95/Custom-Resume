@@ -29,3 +29,13 @@ export interface GenerateCoverLetterRequest {
   baseResume: string;
   styleSample: string;
 }
+
+export interface ScrapeJobRequest {
+  url: string;
+}
+
+export interface ScrapeJobResponse {
+  company: string;
+  title: string;
+  description: string;
+}
