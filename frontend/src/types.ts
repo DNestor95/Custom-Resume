@@ -20,3 +20,9 @@ export interface UpdateJobRequest {
   title?: string;
   description?: string;
 }
+
+export interface ScrapeJobResponse {
+  company: string;
+  title: string;
+  description: string;
+}

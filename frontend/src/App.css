@@ -181,6 +181,29 @@ body {
 .form-group { display: flex; flex-direction: column; gap: .4rem; }
 .form-group label { font-weight: 500; font-size: .9rem; }
 
+/* ===== Import section ===== */
+.import-section {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  margin-top: 1rem;
+}
+.import-section label { font-weight: 500; font-size: .9rem; }
+
+.import-row {
+  display: flex;
+  gap: .5rem;
+  align-items: stretch;
+}
+.import-row input { flex: 1; }
+.import-row .btn { white-space: nowrap; }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+}
+
 .label-row {
   display: flex;
   align-items: center;
