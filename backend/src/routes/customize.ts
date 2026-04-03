@@ -63,7 +63,6 @@ router.post('/', async (req: Request<{}, {}, CustomizeRequest>, res: Response) =
     // Step 4: Save everything to the job entry
     job.tailoredResume = tailoredResume;
     job.coverLetter = tailoredCoverLetter;
-    job.updatedAt = new Date().toISOString();
     jobs.set(job.id, job);
 
     return res.json({
