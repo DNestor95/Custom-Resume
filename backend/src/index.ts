@@ -5,6 +5,7 @@ import { jobsRouter } from './routes/jobs';
 import { resumeRouter } from './routes/resume';
 import { coverLetterRouter } from './routes/coverLetter';
 import { scrapeRouter } from './routes/scrape';
+import { customizeRouter } from './routes/customize';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,6 +17,7 @@ app.use('/api/jobs', jobsRouter);
 app.use('/api/jobs/:id/tailor-resume', resumeRouter);
 app.use('/api/jobs/:id/generate-cover-letter', coverLetterRouter);
 app.use('/api/scrape-job', scrapeRouter);
+app.use('/api/customize', customizeRouter);
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });

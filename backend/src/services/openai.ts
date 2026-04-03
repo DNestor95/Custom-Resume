@@ -90,6 +90,44 @@ Return only the cover letter text, no additional commentary.`;
   return response.choices[0]?.message?.content ?? '';
 }
 
+export async function tailorCoverLetter(
+  baseCoverLetter: string,
+  jobTitle: string,
+  company: string,
+  jobDescription: string
+): Promise<string> {
+  const openai = getClient();
+
+  const prompt = `You are an expert cover letter writer. Your task is to tailor the provided cover letter for a specific job application.
+
+Job Details:
+- Company: ${company}
+- Job Title: ${jobTitle}
+- Job Description: ${jobDescription}
+
+Existing Cover Letter:
+${baseCoverLetter}
+
+Please rewrite and tailor this cover letter to be compelling for this specific role.
+- Preserve the author's voice, tone, and writing style
+- Update references to the company name and job title
+- Highlight the most relevant qualifications and experiences for this role
+- Incorporate keywords from the job description where naturally applicable
+- Keep approximately the same length and structure
+- Ensure the letter sounds authentic and enthusiastic about this specific opportunity
+
+Return only the tailored cover letter text, no additional commentary.`;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.7,
+    max_tokens: 1500,
+  });
+
+  return response.choices[0]?.message?.content ?? '';
+}
+
 export async function extractJobDetails(
   pageText: string
 ): Promise<{ company: string; title: string; description: string }> {
