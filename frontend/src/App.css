@@ -308,4 +308,29 @@ input[type="text"]:focus, textarea:focus {
   .header-inner { padding: 0 1rem; }
   .job-grid { grid-template-columns: 1fr; }
   .card, .editor-section { padding: 1.25rem; }
+  .customize-inputs { grid-template-columns: 1fr; }
+  .customize-results-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Quick Customize ===== */
+.customize-page { display: flex; flex-direction: column; gap: 1.5rem; }
+.customize-subtitle { color: var(--text-muted); font-size: .95rem; margin-bottom: .5rem; }
+
+.customize-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.customize-results-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .75rem;
+  margin-bottom: .5rem;
+}
+.customize-results-header h2 { font-size: 1.15rem; font-weight: 700; }
+
+.customize-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
 }

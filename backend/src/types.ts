@@ -30,6 +30,22 @@ export interface GenerateCoverLetterRequest {
   styleSample: string;
 }
 
+export interface TailorCoverLetterRequest {
+  baseCoverLetter: string;
+}
+
+export interface CustomizeRequest {
+  jobUrl: string;
+  baseResume: string;
+  baseCoverLetter: string;
+}
+
+export interface CustomizeResponse {
+  job: JobApplication;
+  tailoredResume: string;
+  tailoredCoverLetter: string;
+}
+
 export interface ScrapeJobRequest {
   url: string;
 }

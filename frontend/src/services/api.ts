@@ -11,6 +11,12 @@ async function handleResponse<T>(res: Response): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+export interface CustomizeResult {
+  job: JobApplication;
+  tailoredResume: string;
+  tailoredCoverLetter: string;
+}
+
 export const api = {
   getJobs(): Promise<JobApplication[]> {
     return fetch(`${BASE}/jobs`).then(handleResponse<JobApplication[]>);
@@ -66,5 +72,17 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url }),
     }).then(handleResponse<ScrapeJobResponse>);
+  },
+
+  customizeDocuments(
+    jobUrl: string,
+    baseResume: string,
+    baseCoverLetter: string
+  ): Promise<CustomizeResult> {
+    return fetch(`${BASE}/customize`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jobUrl, baseResume, baseCoverLetter }),
+    }).then(handleResponse<CustomizeResult>);
   },
 };

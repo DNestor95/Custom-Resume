@@ -5,9 +5,10 @@ import JobList from './components/JobList';
 import JobForm from './components/JobForm';
 import ResumeEditor from './components/ResumeEditor';
 import CoverLetter from './components/CoverLetter';
+import QuickCustomize from './components/QuickCustomize';
 import './App.css';
 
-type View = 'list' | 'add' | 'detail';
+type View = 'list' | 'add' | 'detail' | 'customize';
 
 export default function App() {
   const [view, setView] = useState<View>('list');
@@ -89,9 +90,14 @@ export default function App() {
               </button>
             )}
             {view === 'list' && (
-              <button className="btn btn-primary" onClick={() => setView('add')}>
-                + Add New Job
-              </button>
+              <>
+                <button className="btn btn-primary" onClick={() => setView('customize')}>
+                  🚀 Quick Customize
+                </button>
+                <button className="btn btn-secondary" onClick={() => setView('add')}>
+                  + Add New Job
+                </button>
+              </>
             )}
           </nav>
         </div>
@@ -118,6 +124,15 @@ export default function App() {
 
         {view === 'add' && (
           <JobForm onCreated={handleJobCreated} onCancel={() => setView('list')} />
+        )}
+
+        {view === 'customize' && (
+          <QuickCustomize
+            onComplete={(job) => {
+              setJobs((prev) => [job, ...prev]);
+            }}
+            onCancel={() => setView('list')}
+          />
         )}
 
         {view === 'detail' && selectedJob && (
